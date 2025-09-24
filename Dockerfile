@@ -33,7 +33,7 @@ RUN npm run migrate:generate
 
 RUN npm run build
 
-RUN npm cache clean --force 
+RUN npm cache clean --force
 
 RUN npm prune --omit=dev
 
@@ -54,7 +54,7 @@ ARG __RW_METADATA_BUILD_NUMBER=0
 # ENV LD_PRELOAD=/usr/lib/libjemalloc.so.2
 # libunwind
 # Install mimalloc
-RUN apk add --no-cache mimalloc curl
+RUN apk add --no-cache mimalloc curl dos2unix
 ENV LD_PRELOAD=/usr/lib/libmimalloc.so
 
 ENV REMNAWAVE_BRANCH=${BRANCH}
@@ -84,6 +84,8 @@ COPY libs ./libs
 
 COPY ecosystem.config.js ./
 COPY docker-entrypoint.sh ./
+
+RUN dos2unix docker-entrypoint.sh
 
 RUN npm install pm2 -g \
     && npm link
