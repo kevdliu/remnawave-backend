@@ -37,6 +37,7 @@ interface OutboundSettings {
         email?: string;
         method?: string;
         uot?: boolean;
+        UoTVersion?: number;
         ivCheck?: boolean;
     }>;
 }
@@ -186,9 +187,9 @@ export class XrayJsonGeneratorService {
                             address: host.address,
                             port: host.port,
                             password: host.password.ssPassword,
-                            method: 'chacha20-ietf-poly1305',
-                            uot: false,
-                            ivCheck: false,
+                            method: host.ssParams?.method,
+                            uot: host.ssParams?.uot,
+                            UoTVersion: host.ssParams?.UoTVersion,
                         },
                     ],
                 };

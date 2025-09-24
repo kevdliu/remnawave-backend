@@ -322,7 +322,7 @@ export class SingBoxGeneratorService {
                     break;
                 case 'shadowsocks':
                     outbound.password = host.password.ssPassword;
-                    outbound.method = 'chacha20-ietf-poly1305';
+                    outbound.method = host.ssParams?.method;
                     break;
             }
 

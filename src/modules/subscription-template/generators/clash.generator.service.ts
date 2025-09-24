@@ -189,7 +189,7 @@ export class ClashGeneratorService {
                 break;
             case 'shadowsocks':
                 node.password = host.password.ssPassword;
-                node.cipher = 'chacha20-ietf-poly1305';
+                node.cipher = host.ssParams?.method;
                 break;
             default:
                 return;

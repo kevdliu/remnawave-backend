@@ -24,7 +24,7 @@ export class RawHostsGeneratorService {
                 if (host.protocol === 'shadowsocks') {
                     rawHost.protocolOptions = {
                         ss: {
-                            method: 'chacha20-ietf-poly1305',
+                            method: host.ssParams?.method || '',
                         },
                     };
                 }

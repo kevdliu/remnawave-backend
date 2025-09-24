@@ -28,7 +28,7 @@ export class OutlineGeneratorService {
                     host.address,
                     host.port,
                     host.password.ssPassword,
-                    'chacha20-ietf-poly1305',
+                    host.ssParams?.method || '',
                 );
 
                 if (!decodedTag) {

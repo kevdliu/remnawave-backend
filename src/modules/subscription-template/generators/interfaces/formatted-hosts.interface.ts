@@ -13,6 +13,11 @@ export interface IFormattedHost {
         trojanPassword: string;
         vlessPassword: string;
     };
+    ssParams?: {
+        method: string;
+        uot: boolean;
+        UoTVersion?: number;
+    };
     path: string;
     publicKey: string;
     port: number;

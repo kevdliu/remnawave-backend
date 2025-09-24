@@ -20,7 +20,7 @@ import {
 } from '@common/helpers/xray-config';
 import { RawObject } from '@common/helpers/xray-config/interfaces/transport.config';
 import { TemplateEngine } from '@common/utils/templates/replace-templates-values';
-import { InboundObject } from '@common/helpers/xray-config/interfaces';
+import { InboundObject, ShadowsocksInboundSettings } from '@common/helpers/xray-config/interfaces';
 import { setVlessRouteForUuid } from '@common/utils/vless-route';
 import { getVlessFlow } from '@common/utils/flow';
 import { SECURITY_LAYERS, USERS_STATUS } from '@libs/contracts/constants';
@@ -461,8 +461,9 @@ export class FormatHostsService {
                 password: {
                     trojanPassword: user.trojanPassword,
                     vlessPassword: setVlessRouteForUuid(user.vlessUuid, inputHost.vlessRouteId),
-                    ssPassword: user.ssPassword,
+                    ssPassword: this.getSSPassword(inbound, user.ssPassword),
                 },
+                ssParams: this.getSSParams(inbound),
                 additionalParams,
                 xHttpExtraParams,
                 serverDescription,
@@ -480,6 +481,42 @@ export class FormatHostsService {
         }
 
         return formattedHosts;
+    }
+
+    private getSSPassword(inbound: InboundObject, userPassword: string): string {
+        if (inbound.protocol != 'shadowsocks') {
+            return userPassword;
+        }
+
+        let settings = inbound.settings as ShadowsocksInboundSettings;
+        let serverPassword = settings.password;
+        if (!serverPassword) {
+            return userPassword;
+        }
+
+        return serverPassword + ":" + userPassword;
+    }
+
+    private getSSParams(inbound: InboundObject): IFormattedHost['ssParams'] | undefined {
+        if (inbound.protocol != 'shadowsocks') {
+            return undefined;
+        }
+
+        let settings = inbound.settings as ShadowsocksInboundSettings;
+        let method = settings.method || '2022-blake3-aes-128-gcm';
+        let network = settings.network || 'tcp';
+        if (network.includes('udp')) {
+            return {
+                method: method,
+                uot: false,
+            };
+        } else {
+            return {
+                method: method,
+                uot: true,
+                UoTVersion: 2,
+            };
+        }
     }
 
     private createFallbackHosts(remarks: string[]): IFormattedHost[] {

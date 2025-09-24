@@ -365,7 +365,7 @@ export class XRayConfig {
                 for (const user of users) {
                     (inbound.settings as ShadowsocksSettings).clients.push({
                         password: user.ssPassword,
-                        method: 'chacha20-ietf-poly1305',
+                        method: '',
                         email: user.tId.toString(),
                         id: user.vlessUuid,
                     });

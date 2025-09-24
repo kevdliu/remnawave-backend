@@ -335,7 +335,7 @@ export class UsersService {
                 shortUuid,
                 trojanPassword: this.createPassword(),
                 vlessUuid: this.createUuid(),
-                ssPassword: this.createPassword(),
+                ssPassword: this.createSSPassword(),
                 subRevokedAt: new Date(),
                 subLastOpenedAt: null,
                 subLastUserAgent: null,
@@ -782,6 +782,13 @@ export class UsersService {
     private createPassword(length: number = 32): string {
         const alphabet = '0123456789ABCDEFGHJKLMNPQRSTUVWXYZ_abcdefghjkmnopqrstuvwxyz-';
         const nanoid = customAlphabet(alphabet, length);
+
+        return nanoid();
+    }
+
+    private createSSPassword(): string {
+        const alphabet = '0123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnopqrstuvwxyz';
+        const nanoid = customAlphabet(alphabet, 32);
 
         return nanoid();
     }

@@ -13,7 +13,7 @@ export interface InboundObject {
     tag: string;
 }
 
-export type InboundSettings = ShadowsocksSettings | TrojanSettings | VLessSettings;
+export type InboundSettings = ShadowsocksInboundSettings | ShadowsocksSettings | TrojanSettings | VLessSettings;
 
 export interface ShadowsocksInboundSettings {
     email?: string;

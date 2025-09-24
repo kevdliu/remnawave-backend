@@ -101,7 +101,7 @@ export class XrayGeneratorService {
                     remark: host.remark,
                     address: host.address,
                     port: host.port,
-                    method: 'chacha20-ietf-poly1305',
+                    method: host.ssParams?.method || '',
                     password: host.password.ssPassword,
                 });
             default:
