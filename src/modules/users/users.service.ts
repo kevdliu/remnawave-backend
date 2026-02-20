@@ -74,7 +74,7 @@ export class UsersService {
                 shortUuid: dto.shortUuid || this.createNanoId(),
                 trojanPassword: dto.trojanPassword || this.createPassword(),
                 vlessUuid: dto.vlessUuid || this.createUuid(),
-                ssPassword: dto.ssPassword || this.createPassword(),
+                ssPassword: dto.ssPassword || this.createSSPassword(),
                 status: dto.status,
                 trafficLimitBytes: wrapBigInt(dto.trafficLimitBytes),
                 trafficLimitStrategy: dto.trafficLimitStrategy,
